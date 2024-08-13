@@ -15,7 +15,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-OPTION(BUILD_SHARED_LIBS "Build shared libraries." ON)
+OPTION(BUILD_SHARED_LIBS "Build shared libraries." OFF)
 
 add_subdirectory(cpp-tiktoken)
 add_subdirectory(sentencepiece)

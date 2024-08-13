@@ -34,13 +34,13 @@ endif
 pre-package:
 ifeq ($(OS),Windows_NT)
 	@powershell -Command "mkdir -p tokenizer;"
-	@powershell -Command "cp build\Release\tokenizer.dll .\tokenizer\;"
+	@powershell -Command "cp build\Release\tokenizer.lib .\tokenizer\;"
 else ifeq ($(shell uname -s),Linux)
 	@mkdir -p tokenizer; \
-	cp build/libtokenizer.so tokenizer/;
+	cp build/libtokenizer.a tokenizer/;
 else
 	@mkdir -p tokenizer; \
-	cp build/libtokenizer.dylib tokenizer/;
+	cp build/libtokenizer.a tokenizer/;
 endif
 
 codesign:
