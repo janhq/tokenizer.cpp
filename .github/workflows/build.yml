@@ -1,4 +1,4 @@
-name: CI Cortex Release
+name: CI Tokenizer Release
 
 on:
   push:
