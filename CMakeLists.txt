@@ -13,12 +13,19 @@ check_include_file_cxx(coroutine HAS_COROUTINE)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+OPTION(BUILD_SHARED_LIBS "Build shared libraries." ON)
+
 add_subdirectory(cpp-tiktoken)
 add_subdirectory(sentencepiece)
 
-#TODO(sang) shared or static as option
+if(BUILD_SHARED_LIBS)
 add_library(${TARGET} SHARED 
     tokenizer.cc
 )
+else()
+add_library(${TARGET} 
+    tokenizer.cc
+)
+endif()
 
 target_compile_features(${TARGET} PUBLIC cxx_std_17)
