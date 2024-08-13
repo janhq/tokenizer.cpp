@@ -5,8 +5,6 @@ on:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
 
-env:
-
 jobs:
   build-and-test:
     runs-on: ${{ matrix.runs-on }}
