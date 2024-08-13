@@ -13,6 +13,8 @@ check_include_file_cxx(coroutine HAS_COROUTINE)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 OPTION(BUILD_SHARED_LIBS "Build shared libraries." ON)
 
 add_subdirectory(cpp-tiktoken)
