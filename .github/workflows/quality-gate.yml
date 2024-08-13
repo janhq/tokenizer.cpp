@@ -1,0 +1,70 @@
+name: CI Quality Gate Tokenizer.cpp
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+env:
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.runs-on }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: "linux"
+            name: "amd64"
+            runs-on: "ubuntu-20-04-cuda-12-0"
+            cmake-flags: "-DTOKENIZER_VERSION=${{github.event.pull_request.head.sha}}"
+            build-deps-cmake-flags: ""
+            ccache-dir: ''
+          - os: "mac"
+            name: "amd64"
+            runs-on: "macos-13"
+            cmake-flags: "-DTOKENIZER_VERSION=${{github.event.pull_request.head.sha}}"
+            build-deps-cmake-flags: ""
+            ccache-dir: ''
+          - os: "mac"
+            name: "arm64"
+            runs-on: "macos-latest"
+            cmake-flags: "-DTOKENIZER_VERSION=${{github.event.pull_request.head.sha}}"
+            build-deps-cmake-flags: ""
+            ccache-dir: ''
+          - os: "windows"
+            name: "amd64"
+            runs-on: "windows-cuda-12-0"
+            cmake-flags: "-DTOKENIZER_VERSION=${{github.event.pull_request.head.sha}}"
+            build-deps-cmake-flags: ""
+            ccache-dir: ''          
+    steps:
+      - name: Clone
+        id: checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install choco on Windows
+        if: runner.os == 'Windows'
+        run: |
+          choco install make pkgconfiglite ccache awscli 7zip ninja -y
+
+      - name: Build
+        run: |          
+          make build CMAKE_EXTRA_FLAGS="${{ matrix.cmake-flags }}" BUILD_DEPS_CMAKE_EXTRA_FLAGS="${{ matrix.build-deps-cmake-flags }}"
+ 
+      - name: Pre-package
+        run: |          
+          make pre-package
+          
+      - name: Package
+        run: |          
+          make package
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: tokenizer-${{ matrix.os }}-${{ matrix.name }}
+          path: ./tokenizer
