@@ -37,10 +37,10 @@ ifeq ($(OS),Windows_NT)
 	@powershell -Command "cp build\Release\tokenizer.dll .\tokenizer\;"
 else ifeq ($(shell uname -s),Linux)
 	@mkdir -p tokenizer; \
-	cp build/tokenizer tokenizer/;
+	cp build/tokenizer.so tokenizer/;
 else
 	@mkdir -p tokenizer; \
-	cp build/tokenizer tokenizer/;
+	cp build/tokenizer.dylib tokenizer/;
 endif
 
 codesign:
