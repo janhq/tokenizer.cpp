@@ -1,0 +1,6 @@
+[submodule "cpp-tiktoken"]
+	path = cpp-tiktoken
+	url = https://github.com/nguyenhoangthuan99/cpp-tiktoken.git
+[submodule "sentencepiece"]
+	path = sentencepiece
+	url = https://github.com/google/sentencepiece.git
